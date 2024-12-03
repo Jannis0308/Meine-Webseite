@@ -1,4 +1,4 @@
-modules = ["web", "nodejs-20"]
+modules = ["nodejs-20", "python-3.11", "web"]
 run = "run"
 
 [nix]
@@ -6,3 +6,7 @@ channel = "stable-24_05"
 
 [deployment]
 run = ["sh", "-c", "run"]
+
+[[ports]]
+localPort = 8000
+externalPort = 80
