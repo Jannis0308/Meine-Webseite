@@ -1,55 +1,82 @@
 <!doctype html>
-<html lang="en">
+<html lang="de">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Admin Panel</title>
+        <title>Admin - Video Upload</title>
         <link rel="stylesheet" href="style.css" />
     </head>
     <body>
-        <div id="login-form">
-            <h2>Login to Admin Panel</h2>
-            <form id="loginForm">
-                <label for="username">Username:</label><br />
-                <input type="text" id="username" name="username" /><br />
-                <label for="password">Password:</label><br />
-                <input
-                    type="password"
-                    id="password"
-                    name="password"
-                /><br /><br />
-                <input type="submit" value="Login" />
-            </form>
-        </div>
+        <header>
+            <h1>Admin Panel</h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="videos.html">Videos</a></li>
+                    <li><a href="admin.html">Login</a></li>
+                    <li><a href="about.html">Über mich</a></li>
+                    <li><a href="contact.html">Kontakt</a></li>
+                </ul>
+            </nav>
+        </header>
 
-        <div id="admin-content" style="display: none">
-            <h2>Welcome, [username]!</h2>
-            <p>This is the admin area.</p>
-        </div>
+        <main>
+            <section>
+                <h2>Video hinzufügen</h2>
+                <form id="video-form" action="/admin/upload" method="POST">
+                    <label for="youtube-url">YouTube-URL:</label><br />
+                    <input
+                        type="text"
+                        id="youtube-url"
+                        name="youtube-url"
+                        placeholder="https://www.youtube.com/watch?v=..."
+                    /><br /><br />
+                    <button type="submit">Video hochladen</button>
+                </form>
+                <div id="upload-status"></div>
+            </section>
+        </main>
 
+        <footer>
+            <p>&copy; 2023 Mein Name</p>
+        </footer>
+
+        <script src="/socket.io/socket.io.js"></script>
         <script>
-            const loginForm = document.getElementById("loginForm");
-            const loginFormContainer = document.getElementById("login-form");
-            const adminContent = document.getElementById("admin-content");
+            const videoForm = document.getElementById("video-form");
+            const uploadStatus = document.getElementById("upload-status");
 
-            loginForm.addEventListener("submit", (event) => {
-                event.preventDefault();
-                const username = document.getElementById("username").value;
-                const password = document.getElementById("password").value;
+            videoForm.addEventListener("submit", (event) => {
+                event.preventDefault(); // Prevent default form submission
 
-                // Basic validation (Replace with your own logic)
-                if (username === "Admin" && password === "Admin") {
-                    // "Login successful" (Remember, this is not secure)
-                    loginFormContainer.style.display = "none";
-                    adminContent.style.display = "block";
-                    adminContent.querySelector("h2").textContent =
-                        "Welcome, " + username + "!";
+                const youtubeUrl = document.getElementById("youtube-url").value;
+                const videoId = youtubeUrl.split("v=")[1]; // Extract video ID from URL
+
+                // Check if the video ID is valid
+                if (videoId) {
+                    uploadStatus.textContent = "Video wird hochgeladen...";
+                    fetch("/admin/upload", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ videoId: videoId }),
+                    })
+                        .then((response) => {
+                            if (response.ok) {
+                                uploadStatus.textContent =
+                                    "Video erfolgreich hochgeladen!";
+                            } else {
+                                uploadStatus.textContent =
+                                    "Fehler beim Hochladen!";
+                            }
+                        })
+                        .catch((error) => {
+                            console.error("Error:", error);
+                            uploadStatus.textContent = "Fehler beim Hochladen!";
+                        });
                 } else {
-                    alert("Invalid username or password.");
+                    uploadStatus.textContent = "Ungültige YouTube-URL!";
                 }
             });
         </script>
-        <script src="/socket.io/socket.io.js"></script> 
-        <script>const socket = io(); // Connect to the server</script>
     </body>
 </html>
