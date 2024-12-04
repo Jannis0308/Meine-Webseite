@@ -1,33 +1,31 @@
 <?php
-session_start();
+session_start(); // Start the session
 
-// Überprüfe, ob ein Formular mit Anmeldedaten gesendet wurde
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST["username"];
     $password = $_POST["password"];
 
-    // Hier fügst du deine Logik für die Authentifizierung ein!
-    // Vergleiche die eingegebenen Daten mit deiner Datenbank oder einem anderen Authentifizierungsmechanismus.
-    // Wenn die Daten gültig sind, starte die Session
-    if (validateUser($username, $password)) {
+    // Load user credentials from a file (replace 'users.txt' with your actual file)
+    $users = file('users.txt');
+
+    $validLogin = false;
+    foreach ($users as $user) {
+        list($storedUsername, $storedPassword) = explode(":", trim($user));
+        if ($username === $storedUsername && $password === $storedPassword) {
+            $validLogin = true;
+            break;
+        }
+    }
+
+    if ($validLogin) {
         $_SESSION["loggedIn"] = true;
         $_SESSION["username"] = $username;
 
-        // Redirect to admin.html
         header("Location: admin.html");
-        exit; // Stop further execution
+        exit;
     } else {
-        // Fehlermeldung ausgeben
-        echo "Ungültige Anmeldedaten!";
+        // Display error message (you can change this)
+        echo "Invalid username or password!";
     }
-}
-
-function validateUser($username, $password) {
-    // Hier fügst du deine Authentifizierungslogik ein!
-    // Diese Funktion sollte true zurückgeben, wenn die Anmeldedaten gültig sind, sonst false
-    // Beispiel:
-    $correctUsername = "admin";
-    $correctPassword = "password"; // In der Realität solltest du die Passwörter hashen!
-    return ($username === $correctUsername && $password === $correctPassword);
 }
 ?>
