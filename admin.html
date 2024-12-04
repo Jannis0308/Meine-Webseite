@@ -1,50 +1,53 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Panel</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Admin Panel</title>
+        <link rel="stylesheet" href="style.css" />
+    </head>
+    <body>
+        <div id="login-form">
+            <h2>Login to Admin Panel</h2>
+            <form id="loginForm">
+                <label for="username">Username:</label><br />
+                <input type="text" id="username" name="username" /><br />
+                <label for="password">Password:</label><br />
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                /><br /><br />
+                <input type="submit" value="Login" />
+            </form>
+        </div>
 
-    <div id="login-form">
-        <h2>Login to Admin Panel</h2>
-        <form id="loginForm">
-            <label for="username">Username:</label><br>
-            <input type="text" id="username" name="username"><br>
-            <label for="password">Password:</label><br>
-            <input type="password" id="password" name="password"><br><br>
-            <input type="submit" value="Login">
-        </form>
-    </div>
+        <div id="admin-content" style="display: none">
+            <h2>Welcome, [username]!</h2>
+            <p>This is the admin area.</p>
+        </div>
 
-    <div id="admin-content" style="display: none;">
-        <h2>Welcome, [username]!</h2>
-        <p>This is the admin area.</p>
-    </div>
+        <script>
+            const loginForm = document.getElementById("loginForm");
+            const loginFormContainer = document.getElementById("login-form");
+            const adminContent = document.getElementById("admin-content");
 
-    <script>
-        const loginForm = document.getElementById('loginForm');
-        const loginFormContainer = document.getElementById('login-form');
-        const adminContent = document.getElementById('admin-content');
+            loginForm.addEventListener("submit", (event) => {
+                event.preventDefault();
+                const username = document.getElementById("username").value;
+                const password = document.getElementById("password").value;
 
-        loginForm.addEventListener('submit', (event) => {
-            event.preventDefault(); 
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-
-            // Basic validation (Replace with your own logic)
-            if (username === 'Admin' && password === 'Lego2011$1') {
-                // "Login successful" (Remember, this is not secure)
-                loginFormContainer.style.display = 'none';
-                adminContent.style.display = 'block';
-                adminContent.querySelector('h2').textContent = 'Welcome, ' + username + '!';
-            } else {
-                alert('Invalid username or password.');
-            }
-        });
-    </script>
-
-</body>
+                // Basic validation (Replace with your own logic)
+                if (username === "Admin" && password === "Admin") {
+                    // "Login successful" (Remember, this is not secure)
+                    loginFormContainer.style.display = "none";
+                    adminContent.style.display = "block";
+                    adminContent.querySelector("h2").textContent =
+                        "Welcome, " + username + "!";
+                } else {
+                    alert("Invalid username or password.");
+                }
+            });
+        </script>
+    </body>
 </html>
