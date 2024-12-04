@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Area</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <?php
+    session_start(); // Start the session
+
+    // Check if user is logged in
+    if (!isset($_SESSION["loggedIn"]) || $_SESSION["loggedIn"] !== true) {
+        // User is not logged in, redirect to login page
+        header("Location: login.html");
+        exit;
+    } else {
+        // User is logged in, display admin content
+        echo "<h1>Welcome to the Admin Area, " . $_SESSION["username"] . "!</h1>";
+        // ... your admin content here ... 
+    }
+    ?>
+</body>
+</html>
