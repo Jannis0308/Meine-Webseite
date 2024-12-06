@@ -1,68 +1,39 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="de">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Videos - Beispiel-Website</title>
-        <link rel="stylesheet" href="style.css" />
-    </head>
-    <body>
-        <header>
-            <h1>Willkommen auf meiner Website!</h1>
-            <nav>
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="videos.html">Videos</a></li>
-                    <li><a href="admin.html">Login</a></li>
-                    <li><a href="about.html">Über mich</a></li>
-                    <li><a href="contact.html">Kontakt</a></li>
-                </ul>
-            </nav>
-        </header>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Videos - Beispiel-Website</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+</head>
+<body>
 
-        <main>
-            <section id="videos">
-                <h2>Unsere Videos</h2>
-                <div class="video-container">
-                    <!-- Videos will be loaded here -->
+    <header>
+        <h1>Willkommen auf meiner Website!</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="videos.html">Videos</a></li>
+                <li><a href="admin.html">Login</a></li>
+                <li><a href="about.html">Über mich</a></li>
+                <li><a href="contact.html">Kontakt</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="videos">
+            <h2>Unsere Videos</h2>
+            <div id="video-container">
                 </div>
-            </section>
-        </main>
+        </section>
+    </main>
 
-        <footer>
-            <p>&copy; 2023 Mein Name</p>
-        </footer>
-        <script src="/socket.io/socket.io.js"></script>
-        <script>
-            // Function to display a video
-            function displayVideo(videoId) {
-                const iframe = document.createElement("iframe");
-                iframe.width = "560";
-                iframe.height = "315";
-                iframe.src = `https://www.youtube.com/embed/${videoId}`;
-                iframe.title = "YouTube video player";
-                iframe.frameborder = "0";
-                iframe.allow =
-                    "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
-                iframe.allowfullscreen = true;
-
-                document.querySelector(".video-container").appendChild(iframe);
-            }
-
-            // Fetch initial videos on page load
-            fetch("/videos")
-                .then((response) => response.json())
-                .then((videos) => {
-                    videos.forEach((video) => {
-                        displayVideo(video.id);
-                    });
-                });
-
-            // Handle new videos from Socket.io
-            const socket = io(); // Connect to the server
-            socket.on("new-video", (videoId) => {
-                displayVideo(videoId);
-            });
-        </script>
-    </body>
+    <footer>
+        <p>&copy; 2023 Mein Name</p>
+    </footer>
+    <script src="videos.js"></script>
+</body>
 </html>

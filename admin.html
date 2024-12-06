@@ -5,6 +5,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Admin - Video Upload</title>
         <link rel="stylesheet" href="style.css" />
+        <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
     </head>
     <body>
         <header>
@@ -23,16 +25,8 @@
         <main>
             <section>
                 <h2>Video hinzufügen</h2>
-                <form id="video-form" action="/admin/upload" method="POST">
-                    <label for="youtube-url">YouTube-URL:</label><br />
-                    <input
-                        type="text"
-                        id="youtube-url"
-                        name="youtube-url"
-                        placeholder="https://www.youtube.com/watch?v=..."
-                    /><br /><br />
-                    <button type="submit">Video hochladen</button>
-                </form>
+                <input type="file" id="video-upload" accept="video/*">
+                <button id="upload-button">Video hochladen</button>
                 <div id="upload-status"></div>
             </section>
         </main>
@@ -40,43 +34,6 @@
         <footer>
             <p>&copy; 2023 Mein Name</p>
         </footer>
-
-        <script src="/socket.io/socket.io.js"></script>
-        <script>
-            const videoForm = document.getElementById("video-form");
-            const uploadStatus = document.getElementById("upload-status");
-
-            videoForm.addEventListener("submit", (event) => {
-                event.preventDefault(); // Prevent default form submission
-
-                const youtubeUrl = document.getElementById("youtube-url").value;
-                const videoId = youtubeUrl.split("v=")[1]; // Extract video ID from URL
-
-                // Check if the video ID is valid
-                if (videoId) {
-                    uploadStatus.textContent = "Video wird hochgeladen...";
-                    fetch("/admin/upload", {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ videoId: videoId }),
-                    })
-                        .then((response) => {
-                            if (response.ok) {
-                                uploadStatus.textContent =
-                                    "Video erfolgreich hochgeladen!";
-                            } else {
-                                uploadStatus.textContent =
-                                    "Fehler beim Hochladen!";
-                            }
-                        })
-                        .catch((error) => {
-                            console.error("Error:", error);
-                            uploadStatus.textContent = "Fehler beim Hochladen!";
-                        });
-                } else {
-                    uploadStatus.textContent = "Ungültige YouTube-URL!";
-                }
-            });
-        </script>
+        <script src="admin.js"></script>
     </body>
 </html>
