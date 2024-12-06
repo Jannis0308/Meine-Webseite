@@ -1,4 +1,3 @@
-// admin.js
 const firebaseConfig = {
   apiKey: "AIzaSyAQq6fmdDJ3cIX5RaNEh6SaINxur-o6AJA",
   authDomain: "meine-webseite-32625.firebaseapp.com",
@@ -11,31 +10,29 @@ const firebaseConfig = {
   measurementId: "G-75F8S9N9SY",
 };
 
-// ... initialize Firebase ...
+// Initialize Firebase
+const app = firebase.initializeApp(firebaseConfig);
+const database = firebase.database(); // Initialize the database here
 
-const videoUploadInput = document.getElementById("youtube-link"); // Get the YouTube link input
+const videoUploadInput = document.getElementById("youtube-link");
 const uploadButton = document.getElementById("upload-button");
 
 uploadButton.addEventListener("click", () => {
   const youtubeLink = videoUploadInput.value;
 
-  // Check if a YouTube link is provided
   if (!youtubeLink) {
     alert("Please enter a valid YouTube link.");
     return;
   }
 
-  // Extract the YouTube video ID using a regex
-  const youtubeId = youtubeLink.match(/(?:v=|vi=|embed\/)([a-zA-Z0-9-_]+)/)[1]; // Extract the video ID
+  const youtubeId = youtubeLink.match(/(?:v=|vi=|embed\/)([a-zA-Z0-9-_]+)/)[1];
 
-  // Create a new reference in the database
   const newVideoRef = database.ref("videos").push();
 
-  // Save the YouTube ID to the database
   newVideoRef.set({
     url: youtubeId,
   });
 
   alert("Video successfully uploaded!");
-  videoUploadInput.value = ""; // Clear the input field
+  videoUploadInput.value = "";
 });
