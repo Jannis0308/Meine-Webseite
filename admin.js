@@ -11,39 +11,31 @@ const firebaseConfig = {
   measurementId: "G-75F8S9N9SY",
 };
 
-// Initialisiere Firebase
-const app = firebase.initializeApp(firebaseConfig);
-const database = firebase.database();
+// ... initialize Firebase ...
 
-// Hole das Upload-Formular und den Upload-Button
-const videoUploadInput = document.getElementById("video-upload");
+const videoUploadInput = document.getElementById("youtube-link"); // Get the YouTube link input
 const uploadButton = document.getElementById("upload-button");
 
-// Event-Listener für den Upload-Button
 uploadButton.addEventListener("click", () => {
-  // Hole die Video-Datei
-  const file = videoUploadInput.files[0];
+  const youtubeLink = videoUploadInput.value;
 
-  // Überprüfe, ob eine Datei ausgewählt wurde
-  if (!file) {
-    alert("Bitte wähle ein Video aus.");
+  // Check if a YouTube link is provided
+  if (!youtubeLink) {
+    alert("Please enter a valid YouTube link.");
     return;
   }
 
-  // TODO: extract YouTube video id from file, possibly using a library or regex
-  const youtubeId = "YOUR_YOUTUBE_ID"; // Example, replace with actual logic
+  // Extract the YouTube video ID using a regex
+  const youtubeId = youtubeLink.match(/(?:v=|vi=|embed\/)([a-zA-Z0-9-_]+)/)[1]; // Extract the video ID
 
-  // Erstelle einen neuen Datensatz in der Realtime Database
+  // Create a new reference in the database
   const newVideoRef = database.ref("videos").push();
 
-  // Speichere die YouTube Video ID in der Realtime Database
+  // Save the YouTube ID to the database
   newVideoRef.set({
     url: youtubeId,
   });
 
-  // Zeige eine Bestätigung an
-  alert("Video erfolgreich hochgeladen!");
-
-  // Lösche das Upload-Formular, um für den nächsten Upload bereit zu sein
-  videoUploadInput.value = "";
+  alert("Video successfully uploaded!");
+  videoUploadInput.value = ""; // Clear the input field
 });
