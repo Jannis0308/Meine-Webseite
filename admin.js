@@ -30,18 +30,15 @@ uploadButton.addEventListener("click", () => {
     return;
   }
 
-  // Lade das Video auf Firebase Storage hoch (mithilfe eines temporären Upload-Dienstes)
-  // ... (Code für den Upload auf Firebase Storage)
+  // TODO: extract YouTube video id from file, possibly using a library or regex
+  const youtubeId = "YOUR_YOUTUBE_ID"; // Example, replace with actual logic
 
   // Erstelle einen neuen Datensatz in der Realtime Database
   const newVideoRef = database.ref("videos").push();
 
-  // Hole die Download-URL des hochgeladenen Videos von Firebase Storage
-  // ... (Code für das Abrufen der Download-URL)
-
-  // Speichere die Download-URL in der Realtime Database
+  // Speichere die YouTube Video ID in der Realtime Database
   newVideoRef.set({
-    url: downloadURL,
+    url: youtubeId,
   });
 
   // Zeige eine Bestätigung an
