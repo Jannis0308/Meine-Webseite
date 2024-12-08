@@ -25,7 +25,10 @@ uploadButton.addEventListener("click", () => {
     return;
   }
 
-  const youtubeId = youtubeLink.match(/(?:v=|vi=|embed\/)([a-zA-Z0-9-_]+)/)[1];
+  // Modified Regex to handle ?si parameter
+  const youtubeId = youtubeLink.match(
+    /(?:v=|vi=|embed\/|youtu.be\/)([a-zA-Z0-9-_]+)/,
+  )[1];
 
   const newVideoRef = database.ref("videos").push();
 

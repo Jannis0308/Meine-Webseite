@@ -1,0 +1,38 @@
+version = 1
+requires-python = ">=3.11"
+
+[[package]]
+name = "netifaces"
+version = "0.10.6"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/72/01/ba076082628901bca750bf53b322a8ff10c1d757dc29196a8e6082711c9d/netifaces-0.10.6.tar.gz", hash = "sha256:0c4da523f36d36f1ef92ee183f2512f3ceb9a9d2a45f7d19cda5a42c6689ebe0", size = 25166 }
+
+[[package]]
+name = "repl-nix-meine-webseite"
+version = "0.1.0"
+source = { virtual = "." }
+dependencies = [
+    { name = "socketio" },
+]
+
+[package.metadata]
+requires-dist = [{ name = "socketio", specifier = ">=0.2.1" }]
+
+[[package]]
+name = "setuptools"
+version = "3.3"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/82/e6/049fc4474cf5cebab5748e886836af23b41436f8b069eac836c7231e7325/setuptools-3.3.tar.gz", hash = "sha256:f3e6155f9bb62bfd59b7f6cc2ecda21aae903e6b585f8bc55e801609c5f7814f", size = 792267 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/fc/20/0b304ea9830d53c9068e1e96bbf1ee529283f96ee0ee6ccaaa697f7b2383/setuptools-3.3-py2.py3-none-any.whl", hash = "sha256:4705222d7b1d308f67bd4a34ff2fb8a35b8a42f68ccb4a60586a2dd979665875", size = 545341 },
+]
+
+[[package]]
+name = "socketio"
+version = "0.2.1"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "netifaces" },
+    { name = "setuptools" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/e0/bf/37ebfc6f628741a1ece11a3147b1927168ff70839b6ec83d0f9a1526abee/socketio-0.2.1.tar.gz", hash = "sha256:dee5abde39c6021d9d1874582479a4e7f8a8352b38bc7731fb6b27b76976f62c", size = 6081 }
